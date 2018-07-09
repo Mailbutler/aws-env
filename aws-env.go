@@ -35,8 +35,11 @@ func main() {
 		}
 		ExportVariables(client, os.Getenv("AWS_ENV_PATH"), recursive, "")
 	}
-	fmt.Println("os.Args")
-	fmt.Println(os.Args)
+	fmt.Println("os.Args = ")
+	for index, element := range os.Args {
+		fmt.Println(index, "=>", element)
+	}
+
 	binary, lookErr := exec.LookPath(os.Args[1])
 	if lookErr != nil {
 		panic(lookErr)
