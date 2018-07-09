@@ -39,18 +39,20 @@ func main() {
 	for index, element := range os.Args {
 		fmt.Println(index, "=>", element)
 	}
+	if len(os.Args) >= 1 {
+		binary, lookErr := exec.LookPath(os.Args[1])
+		if lookErr != nil {
+			panic(lookErr)
+		}
 
-	binary, lookErr := exec.LookPath(os.Args[1])
-	if lookErr != nil {
-		panic(lookErr)
+		env := os.Environ()
+		args := os.Args[1:]
+		execErr := syscall.Exec(binary, args, env)
+		if execErr != nil {
+			panic(execErr)
+		}
 	}
 
-	env := os.Environ()
-	args := os.Args[1:]
-	execErr := syscall.Exec(binary, args, env)
-	if execErr != nil {
-		panic(execErr)
-	}
 }
 
 func CreateSession() *session.Session {
