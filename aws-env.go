@@ -37,7 +37,7 @@ func main() {
 	}
 	fmt.Println("os.Args")
 	fmt.Println(os.Args)
-	binary, lookErr := exec.LookPath(os.Args[0])
+	binary, lookErr := exec.LookPath(os.Args[1])
 	if lookErr != nil {
 		panic(lookErr)
 	}
