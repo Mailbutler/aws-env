@@ -4,11 +4,9 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"os/exec"
 	"path"
 	"strconv"
 	"strings"
-	"syscall"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/ec2metadata"
@@ -35,23 +33,23 @@ func main() {
 		}
 		ExportVariables(client, os.Getenv("AWS_ENV_PATH"), recursive, "")
 	}
-	fmt.Println("os.Args = ")
-	for index, element := range os.Args {
-		fmt.Println(index, "=>", element)
-	}
-	if len(os.Args) >= 2 {
-		binary, lookErr := exec.LookPath(os.Args[1])
-		if lookErr != nil {
-			panic(lookErr)
-		}
-
-		env := os.Environ()
-		args := os.Args[1:]
-		execErr := syscall.Exec(binary, args, env)
-		if execErr != nil {
-			panic(execErr)
-		}
-	}
+	// fmt.Println("os.Args = ")
+	// for index, element := range os.Args {
+	// 	fmt.Println(index, "=>", element)
+	// }
+	// if len(os.Args) >= 2 {
+	// 	binary, lookErr := exec.LookPath(os.Args[1])
+	// 	if lookErr != nil {
+	// 		panic(lookErr)
+	// 	}
+	//
+	// 	env := os.Environ()
+	// 	args := os.Args[1:]
+	// 	execErr := syscall.Exec(binary, args, env)
+	// 	if execErr != nil {
+	// 		panic(execErr)
+	// 	}
+	// }
 
 }
 
@@ -109,7 +107,7 @@ func PrintExportParameter(path string, parameter *ssm.Parameter) {
 	value = strings.Replace(value, "\n", "\\n", -1)
 	value = strings.Replace(value, "'", "\\'", -1)
 
-	fmt.Printf("export %s=$'%s'\n", env, value)
+	fmt.Printf("export %s=%s\n", env, value)
 }
 
 func SetExportParameter(parameter *ssm.Parameter) {
