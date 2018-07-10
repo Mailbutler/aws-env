@@ -39,7 +39,7 @@ func main() {
 	for index, element := range os.Args {
 		fmt.Println(index, "=>", element)
 	}
-	if len(os.Args) >= 1 {
+	if len(os.Args) >= 2 {
 		binary, lookErr := exec.LookPath(os.Args[1])
 		if lookErr != nil {
 			panic(lookErr)
