@@ -5,6 +5,8 @@ NAME=aws-env
 
 mkdir -p $BUILD_DIR
 
+go mod tidy
+
 for GOOS in darwin; do
     for GOARCH in amd64 arm64; do
         rm -f $BUILD_DIR/$NAME-$GOOS-$GOARCH
