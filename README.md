@@ -89,7 +89,7 @@ Use `--require-path` to make that an error.
 Download a release binary and check it against the release's `checksums.txt`. Pin both the version and the checksum:
 
 ```dockerfile
-ARG AWS_ENV_VERSION=v2.0.0
+ARG AWS_ENV_VERSION=v2.0.1
 ARG TARGETARCH
 # sha256 of aws-env-linux-${TARGETARCH} from the release's checksums.txt
 ARG AWS_ENV_SHA256_amd64=<sha256>
@@ -111,7 +111,7 @@ Releases are built by GitHub Actions with [GoReleaser](https://goreleaser.com). 
 
 ```
 cosign verify-blob checksums.txt \
-  --certificate checksums.txt.pem --signature checksums.txt.sig \
+  --bundle checksums.txt.sigstore.json \
   --certificate-identity-regexp '^https://github.com/Mailbutler/aws-env/\.github/workflows/release\.yml@refs/tags/v' \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com
 sha256sum -c checksums.txt --ignore-missing
